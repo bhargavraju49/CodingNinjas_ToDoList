@@ -1,24 +1,36 @@
-let tasks = [];
+(function(){
+    let tasks = [];
 const taskList = document.getElementById("list");
 const addTaskInput = document.getElementById("add");
 const tasksCounter = document.getElementById("tasks-counter");
 
-function fetchTodo(){
+async function fetchTodo(){
     //get req
-    fetch('https://jsonplaceholder.typicode.com/todos')  //return dummy promise
-    .then(function(response){
-        console.log(response)
-        return response.json();          // converting response to json returns another promise
-    })
-    .then(function(data){
-        // fetched data
+    // fetch('https://jsonplaceholder.typicode.com/todos')  //return dummy promise
+    // .then(function(response){
+    //     console.log(response)
+    //     return response.json();          // converting response to json returns another promise
+    // })
+    // .then(function(data){
+    //     // fetched data
+    //     tasks = data.slice(0,10);
+    //     console.log(data)
+    //     renderList();
+    // })
+    // .catch(function(error){
+    //     console.log(error)
+    // })
+    try{
+        const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+        const data = await response.json();
         tasks = data.slice(0,10);
-        console.log(data)
         renderList();
-    })
-    .catch(function(error){
-        console.log(error)
-    })
+    }
+    catch(error){
+        console.log(error);
+    }
+
+
 }
 
 function addTaskDom (task) {
@@ -127,3 +139,4 @@ function initialiseApp() {
 }
 
 initialiseApp();
+})()
